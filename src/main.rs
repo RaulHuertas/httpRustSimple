@@ -18,6 +18,7 @@ enum LedColor {
     Green,
     Yellow,
     Purple,
+    Black,
     White,
 }
 
@@ -29,15 +30,27 @@ impl fmt::Display for LedColor {
             LedColor::Yellow => "yellow",
             LedColor::Purple => "purple",
             LedColor::White => "white",
+            LedColor::Black => "black",
         };
 
         write!(f, "{color}")
     }
 }
 
+fn parse_led_color(color: &str) -> LedColor {
+    match color {
+        "red" => LedColor::Red,
+        "green" => LedColor::Green,
+        "yellow" => LedColor::Yellow,
+        "purple" => LedColor::Purple,
+        "white" => LedColor::White,
+        _ => LedColor::Black,
+    }
+}
+
 #[derive(Debug, Deserialize)]
 struct SetLedColorRequest {
-    color: LedColor,
+    color: String,
 }
 
 #[derive(Debug, Serialize)]
@@ -69,9 +82,8 @@ async fn show_big_message(Json(payload): Json<ShowBigMessageRequest>) -> Json<Ok
 }
 
 async fn set_led_color(Json(payload): Json<SetLedColorRequest>) -> Json<OkResponse> {
-    let color = payload.color;
+    let color = parse_led_color(&payload.color);
 
     println!("Color message received: {}", color);
     Json(OkResponse { status: "ok" })
 }
-
