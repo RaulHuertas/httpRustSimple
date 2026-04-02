@@ -15,10 +15,15 @@ struct ShowBigMessageRequest {
 #[serde(rename_all = "lowercase")]
 enum LedColor {
     Red,
+    Crimson,
+    Olive,
     Green,
     Yellow,
     Purple,
     Black,
+    Orange,
+    Cyan,
+    Pink,
     White,
 }
 
@@ -31,6 +36,11 @@ impl fmt::Display for LedColor {
             LedColor::Purple => "purple",
             LedColor::White => "white",
             LedColor::Black => "black",
+            LedColor::Crimson => "crimson",
+            LedColor::Olive => "olive",
+            LedColor::Orange => "orange",
+            LedColor::Cyan => "cyan",
+            LedColor::Pink => "pink",
         };
 
         write!(f, "{color}")
@@ -44,6 +54,11 @@ fn parse_led_color(color: &str) -> LedColor {
         "yellow" => LedColor::Yellow,
         "purple" => LedColor::Purple,
         "white" => LedColor::White,
+        "black" => LedColor::Black,
+        "pink" => LedColor::Pink,
+        "cyan" => LedColor::Cyan,
+        "crimson" => LedColor::Crimson,
+        "olive" => LedColor::Olive,
         _ => LedColor::Black,
     }
 }
